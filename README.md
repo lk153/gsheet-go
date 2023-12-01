@@ -1,2 +1,2 @@
-# gsheet-go
-Go Packages for GSheet Utility
+# task-tracking-gsheet-go
+Go Packages for GSheet Tracking Task Progress
