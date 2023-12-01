@@ -1,0 +1,6 @@
+package constant
+
+const (
+	GSHEET_CREDENTIAL = "GSHEET_CREDENTIAL"
+	GSHEET_TOKEN      = "GSHEET_TOKEN"
+)

@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+credentials.json
+token.json
+example.go
+out
+vendor
