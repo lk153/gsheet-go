@@ -49,14 +49,8 @@ API: POST https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{
 DOC: https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
 */
 func (srv *GSheetService) Append(
-	spreadsheetId string, range_ string, data []string,
+	spreadsheetId string, range_ string, values [][]interface{},
 ) (resp *sheets.AppendValuesResponse, err error) {
-	values := [][]interface{}{}
-	var interfaceSlice []interface{}
-	for _, s := range data {
-		interfaceSlice = append(interfaceSlice, s)
-	}
-	values = append(values, interfaceSlice)
 	valuerange := &sheets.ValueRange{
 		MajorDimension: constant.MajorDimension_ROWS.String(),
 		Range:          range_,
