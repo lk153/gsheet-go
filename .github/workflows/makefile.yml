@@ -12,8 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ArangoGutierrez/GoLinty-Action@go-1.13rc1-alpine
-
+    - name: GolangCI-lint
+      uses: github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
+      with:
+        args: golangci-lint run
+        
     - name: Run build
       uses: cedrickring/golang-action@1.6.0
       with:
