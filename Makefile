@@ -7,7 +7,7 @@ GOSTATIC            := go build -ldflags="-w -s"
 clean:
 	rm -rf ./out/main cpu.pprof mem.pprof
 build: clean
-	go mod tidy && go mod vendor && $(GOSTATIC) -o out/main ./
+	go mod tidy && go mod vendor
 lint:
 	$(GOLINTCLEARCACHE) && $(GOLINT) -v ./...
 test:

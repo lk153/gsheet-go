@@ -70,10 +70,10 @@ func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
 
 func tokenFromFile(file string) (tok *oauth2.Token, err error) {
 	f, err := os.Open(file)
-	defer f.Close()
 	if err != nil {
 		return
 	}
+	defer f.Close()
 
 	tok = &oauth2.Token{}
 	err = json.NewDecoder(f).Decode(tok)

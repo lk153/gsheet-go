@@ -9,7 +9,8 @@ import (
 )
 
 type ISheetService interface {
-	ReadSheet()
+	ReadSheet(spreadsheetId, readRange string) (values [][]string)
+	Append(spreadsheetId string, range_ string, values [][]interface{}) (resp *sheets.AppendValuesResponse, err error)
 }
 
 type GSheetService struct {
