@@ -35,7 +35,7 @@ Go Packages support for GSheet Integration
 
 ### 5. Code Examples:
 
-````
+```
 package main
 
 import (
@@ -61,4 +61,4 @@ func Import() {
             ...
 	}
 }
-````
+```
