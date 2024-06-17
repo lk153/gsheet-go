@@ -32,3 +32,33 @@ Go Packages support for GSheet Integration
     `--data-urlencode 'client_id={Client ID}' \\`<br>
     `--data-urlencode 'client_secret={Client Secret}' \\`<br>
     `--data-urlencode 'redirect_uri=http://localhost'`
+
+### 5. Code Examples:
+
+````
+package main
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"github.com/lk153/gsheet-go/lib"
+)
+
+func Import() {
+	srv, err := lib.NewGsheetServiceV2()
+	if err != nil {
+		fmt.Println("Cannot connect Gsheet!")
+		return
+	}
+
+	spreadsheetID := "01c-onQeYHmvc-EPkrJDU-WyAydbCAA1ng6hXCgdYiqqg"
+	readRange := "'To Update on DB'!A3:AR3"
+	values := srv.ReadSheet(spreadsheetID, readRange)
+	for idx, row := range values {
+            ...
+            ...
+	}
+}
+````
