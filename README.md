@@ -1,3 +1,8 @@
+[![Go Reference](https://pkg.go.dev/badge/lk153/gsheet-go/markdown.svg)](https://pkg.go.dev/github.com/lk153/gsheet-go)
+[![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml)
+[![reviewdog](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml)
+[![Gosec](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml)
+
 # Gsheet Utils
 Go Packages support for GSheet Integration
 
