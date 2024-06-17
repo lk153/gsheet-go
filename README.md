@@ -1,5 +1,5 @@
 # Gsheet Utils
-Go Packages for GSheet Utils
+Go Packages support for GSheet Integration
 
 ### 1. Setup ENV
 
@@ -18,11 +18,12 @@ Go Packages for GSheet Utils
 
 ### 4. Get Gsheet Token
 
-1. Input URL on web browser to get Authorization Code firstly:
+1. Input URL on web browser to get **Authorization Code** firstly:
 
-    https://accounts.google.com/o/oauth2/auth?state-token=offline&redirect_uri=http://localhost&response_type=code&client_id=**{Client ID}**&scope=https://www.googleapis.com/auth/spreadsheets
+    https://accounts.google.com/o/oauth2/auth?state-token=offline&redirect_uri=http://localhost&response_type=code&client_id={client_id}&scope=https://www.googleapis.com/auth/spreadsheets
 
-2. Call POST API:
+
+2. Call POST API to retrieve **access token**:
 
     `curl --location 'https://oauth2.googleapis.com/token' \\`<br>
     `--header 'Content-Type: application/x-www-form-urlencoded' \\`<br>
