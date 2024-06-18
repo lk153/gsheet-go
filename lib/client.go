@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -16,7 +17,7 @@ import (
 
 func NewGsheetService(credentialFilePath string) (gsrv *GSheetService, err error) {
 	ctx := context.Background()
-	b, err := os.ReadFile(credentialFilePath)
+	b, err := os.ReadFile(filepath.Clean(credentialFilePath))
 	if err != nil {
 		log.Default().Println("Unable to read client secret file: ", err)
 		return
@@ -69,7 +70,7 @@ func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
 }
 
 func tokenFromFile(file string) (tok *oauth2.Token, err error) {
-	f, err := os.Open(file)
+	f, err := os.Open(filepath.Clean(file))
 	if err != nil {
 		return
 	}
@@ -82,7 +83,7 @@ func tokenFromFile(file string) (tok *oauth2.Token, err error) {
 
 func saveToken(path string, token *oauth2.Token) {
 	fmt.Printf("Saving credential file to: %s\n", path)
-	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
+	f, err := os.OpenFile(filepath.Clean(path), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {
 		log.Fatalf("Unable to cache oauth token: %v", err)
 	}
