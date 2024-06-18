@@ -1,6 +1,6 @@
 module github.com/lk153/gsheet-go
 
-go 1.22
+go 1.20
 
 require (
 	golang.org/x/oauth2 v0.21.0
