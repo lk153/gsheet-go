@@ -2,6 +2,7 @@
 [![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml)
 [![reviewdog](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml)
 [![Gosec](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml)
+![Coverage](https://raw.githubusercontent.com/lk153/octocovs-central/main/badges/lk153/gsheet-go/coverage.svg)
 
 # Gsheet Utils
 Go Packages support for GSheet Integration
