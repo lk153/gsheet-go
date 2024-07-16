@@ -2,7 +2,10 @@
 [![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml)
 [![reviewdog](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml)
 [![Gosec](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml)
-![Coverage](https://raw.githubusercontent.com/lk153/octocovs-central/main/badges/lk153/gsheet-go/coverage.svg)
+
+[![Coverage](https://raw.githubusercontent.com/lk153/octocovs-central/main/badges/lk153/gsheet-go/coverage.svg)](https://github.com/lk153/octocovs-central)
+[![Coverage Status](https://coveralls.io/repos/github/lk153/gsheet-go/badge.svg?branch=main)](https://coveralls.io/github/lk153/gsheet-go?branch=main)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lk153/gsheet-go)](https://goreportcard.com/report/github.com/lk153/gsheet-go)
 
 # Gsheet Utils
 Go Packages support for GSheet Integration
