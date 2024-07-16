@@ -29,8 +29,14 @@ func NewGsheetService(credentialFilePath string) (gsrv *GSheetService, err error
 		return
 	}
 
+	client, err := getClient(ctx, config)
+	if err != nil {
+		log.Default().Println("Unable to init client: ", err)
+		return
+	}
+
 	srv, err := sheets.NewService(ctx, option.WithHTTPClient(
-		getClient(ctx, config),
+		client,
 	))
 	if err != nil {
 		log.Default().Println("Unable to retrieve Sheets client: ", err)
@@ -42,31 +48,38 @@ func NewGsheetService(credentialFilePath string) (gsrv *GSheetService, err error
 	return
 }
 
-func getClient(ctx context.Context, config *oauth2.Config) *http.Client {
+func getClient(ctx context.Context, config *oauth2.Config) (client *http.Client, err error) {
 	tokenFile := "token.json"
 	tok, err := tokenFromFile(tokenFile)
 	if err != nil {
-		tok = getTokenFromWeb(config)
+		tok, err = getTokenFromWeb(config)
+		if err != nil {
+			return
+		}
+
 		saveToken(tokenFile, tok)
 	}
-	return config.Client(ctx, tok)
+
+	client = config.Client(ctx, tok)
+	return
 }
 
-func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
+func getTokenFromWeb(config *oauth2.Config) (tok *oauth2.Token, err error) {
 	authURL := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
-	fmt.Printf(`Go to the following link in your browser then type the 
-	authorization code: \n%v\n`, authURL)
+	log.Default().Printf(`Go to the following link in your browser then type the authorization code: \n%v\n`, authURL)
 
 	var authCode string
-	if _, err := fmt.Scan(&authCode); err != nil {
-		log.Fatalf("Unable to read authorization code: %v", err)
+	if _, err = fmt.Scan(&authCode); err != nil {
+		err = fmt.Errorf("unable to read authorization code: %v", err)
+		return
 	}
 
-	tok, err := config.Exchange(context.TODO(), authCode)
+	tok, err = config.Exchange(context.TODO(), authCode)
 	if err != nil {
-		log.Fatalf("Unable to retrieve token from web: %v", err)
+		err = fmt.Errorf("unable to retrieve token from web: %v", err)
 	}
-	return tok
+
+	return
 }
 
 func tokenFromFile(file string) (tok *oauth2.Token, err error) {
