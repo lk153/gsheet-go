@@ -1,12 +1,11 @@
 module github.com/lk153/gsheet-go
 
 go 1.22
-
 toolchain go1.23.3
 
 require (
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/oauth2 v0.26.0
+	golang.org/x/oauth2 v0.27.0
 	google.golang.org/api v0.216.0
 )
 
