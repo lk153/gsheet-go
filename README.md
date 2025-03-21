@@ -49,13 +49,15 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"github.com/lk153/gsheet-go/lib"
 )
 
-func Import() {
+func main() {
+	runTest()
+}
+
+func runTest() {
 	srv, err := lib.NewGsheetServiceV2()
 	if err != nil {
 		fmt.Println("Cannot connect Gsheet!")
