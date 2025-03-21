@@ -1,6 +1,6 @@
 GOPATH              := $(or $(GOPATH), $(HOME)/go)
-GOLINT              := golangci-lint run
-GOLINTCLEARCACHE	:= golangci-lint cache clean
+GOLINT              := GO111MODULE=on CGO_ENABLED=1 golangci-lint run
+GOLINTCLEARCACHE	:= GO111MODULE=on CGO_ENABLED=1 golangci-lint cache clean
 GO_TEST_PARALLEL    := go test -parallel 4 -count=1 -timeout 30s
 GOOGLE_WIRE 		:= $(GOPATH)/bin/wire
 GOBUILDDEBUG        := go build -gcflags=all="-N -l"
