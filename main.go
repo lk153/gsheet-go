@@ -30,5 +30,10 @@ func runTest() {
 		{7, "cherry", 9.42, true},
 	}
 
-	srv.Append(spreadsheetID, readRange, data)
+	_, err = srv.Append(spreadsheetID, readRange, data)
+	if err != nil {
+		fmt.Println("Gsheet Append has error", err)
+	}
+
+	return
 }
