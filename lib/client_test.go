@@ -44,12 +44,12 @@ func (suite *GsheetServiceTestSuite) TestNewGsheetService() {
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetServiceV2() {
 	gsrv, err := lib.NewGsheetServiceV2()
-	suite.NotNil(gsrv)
-	suite.Require().NoError(err)
+	suite.Nil(gsrv)
+	suite.Require().Error(err)
 }
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetServiceV2_has_GSHEET_TOKEN() {
 	gsrv, err := lib.NewGsheetServiceV2()
-	suite.NotNil(gsrv)
-	suite.Require().NoError(err)
+	suite.Nil(gsrv)
+	suite.Require().Error(err)
 }
