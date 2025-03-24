@@ -24,3 +24,5 @@ token.json
 examples
 out
 vendor
+gsheet-go
+.vscode
