@@ -5,18 +5,20 @@ package constant
 type MajorDimension int
 
 const (
-	MajorDimension_ROWS MajorDimension = iota
-	MajorDimension_COLUMNS
+	Unknown = "unknown"
+
+	MajorDimensionRows MajorDimension = iota
+	MajorDimensionColumns
 )
 
 func (m MajorDimension) String() string {
 	switch m {
-	case MajorDimension_ROWS:
+	case MajorDimensionRows:
 		return "ROWS"
-	case MajorDimension_COLUMNS:
+	case MajorDimensionColumns:
 		return "COLUMNS"
 	}
-	return "unknown"
+	return Unknown
 }
 
 /* ValueInputOption ====================================================================
@@ -24,18 +26,18 @@ func (m MajorDimension) String() string {
 type ValueInputOption int
 
 const (
-	ValueInputOption_RAW ValueInputOption = iota
-	ValueInputOption_USER_ENTERED
+	ValueInputOptionRaw ValueInputOption = iota
+	ValueInputOptionUserEntered
 )
 
 func (v ValueInputOption) String() string {
 	switch v {
-	case ValueInputOption_RAW:
+	case ValueInputOptionRaw:
 		return "RAW"
-	case ValueInputOption_USER_ENTERED:
+	case ValueInputOptionUserEntered:
 		return "USER_ENTERED"
 	}
-	return "unknown"
+	return Unknown
 }
 
 /* LocationType ====================================================================
@@ -43,18 +45,18 @@ func (v ValueInputOption) String() string {
 type LocationType int
 
 const (
-	LocationType_ROW LocationType = iota
-	LocationType_COLUMN
+	LocationTypeRow LocationType = iota
+	LocationTypeColumn
 )
 
 func (l LocationType) String() string {
 	switch l {
-	case LocationType_ROW:
+	case LocationTypeRow:
 		return "ROW"
-	case LocationType_COLUMN:
+	case LocationTypeColumn:
 		return "COLUMN"
 	}
-	return "unknown"
+	return Unknown
 }
 
 /* LocationType ====================================================================
@@ -62,18 +64,18 @@ func (l LocationType) String() string {
 type InsertDataOption int
 
 const (
-	InsertDataOption_OVERWRITE InsertDataOption = iota
-	InsertDataOption_INSERT_ROWS
+	InsertDataOptionOverwrite InsertDataOption = iota
+	InsertDataOptionInsertRows
 )
 
 func (i InsertDataOption) String() string {
 	switch i {
-	case InsertDataOption_OVERWRITE:
+	case InsertDataOptionOverwrite:
 		return "OVERWRITE"
-	case InsertDataOption_INSERT_ROWS:
+	case InsertDataOptionInsertRows:
 		return "INSERT_ROWS"
 	}
-	return "unknown"
+	return Unknown
 }
 
 /* ValueRenderOption ====================================================================
@@ -81,19 +83,19 @@ func (i InsertDataOption) String() string {
 type ValueRenderOption int
 
 const (
-	ValueRenderOption_FORMATTED_VALUE ValueRenderOption = iota
-	ValueRenderOption_UNFORMATTED_VALUE
-	ValueRenderOption_FORMULA
+	ValueRenderOptionFormattedValue ValueRenderOption = iota
+	ValueRenderOptionUnFormattedValue
+	ValueRenderOptionFormula
 )
 
 func (v ValueRenderOption) String() string {
 	switch v {
-	case ValueRenderOption_FORMATTED_VALUE:
+	case ValueRenderOptionFormattedValue:
 		return "FORMATTED_VALUE"
-	case ValueRenderOption_UNFORMATTED_VALUE:
+	case ValueRenderOptionUnFormattedValue:
 		return "UNFORMATTED_VALUE"
-	case ValueRenderOption_FORMULA:
+	case ValueRenderOptionFormula:
 		return "FORMULA"
 	}
-	return "unknown"
+	return Unknown
 }

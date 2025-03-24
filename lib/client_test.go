@@ -3,7 +3,6 @@ package lib_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/lk153/gsheet-go/constant"
@@ -21,7 +20,7 @@ func TestGsheetServiceTestSuite(t *testing.T) {
 
 func (suite *GsheetServiceTestSuite) SetupTest() {
 	suite.credentialFilePath = "client_secret.json"
-	suite.T().Setenv(constant.GSHEET_CREDENTIAL, `{
+	suite.T().Setenv(constant.GsheetCredential, `{
 		"web": {
 			"client_id": "client_id",
 			"project_id": "project_id",
@@ -38,21 +37,21 @@ func (suite *GsheetServiceTestSuite) SetupTest() {
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetService() {
 	gsrv, err := lib.NewGsheetService(suite.credentialFilePath)
-	assert.Nil(suite.T(), gsrv)
-	suite.NotNil(err)
+	suite.Nil(suite.T(), gsrv)
+	suite.Require().Error(err)
 	suite.Contains(err.Error(), "unable to read authorization code")
 }
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetServiceV2() {
 	gsrv, err := lib.NewGsheetServiceV2()
-	assert.Nil(suite.T(), gsrv)
-	suite.NotNil(err)
+	suite.Nil(suite.T(), gsrv)
+	suite.Require().Error(err)
 	suite.Contains(err.Error(), "could not find default credentials")
 }
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetServiceV2_has_GSHEET_TOKEN() {
 	gsrv, err := lib.NewGsheetServiceV2()
-	assert.Nil(suite.T(), gsrv)
-	suite.NotNil(err)
+	suite.Nil(suite.T(), gsrv)
+	suite.Require().Error(err)
 	suite.Contains(err.Error(), "could not find default credentials")
 }

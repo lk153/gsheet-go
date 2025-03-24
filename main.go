@@ -24,7 +24,7 @@ func runTest() {
 		fmt.Println(idx, row)
 	}
 
-	data := [][]interface{}{
+	data := [][]any{
 		{5, "apple", 3.14, true},
 		{6, "banana", 6.28, false},
 		{7, "cherry", 9.42, true},
@@ -34,6 +34,4 @@ func runTest() {
 	if err != nil {
 		fmt.Println("Gsheet Append has error", err)
 	}
-
-	return
 }

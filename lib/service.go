@@ -9,8 +9,8 @@ import (
 )
 
 type ISheetService interface {
-	ReadSheet(spreadsheetId, readRange string) (values [][]string)
-	Append(spreadsheetId string, range_ string, values [][]interface{}) (resp *sheets.AppendValuesResponse, err error)
+	ReadSheet(spreadsheetID, readRange string) (values [][]string)
+	Append(spreadsheetID string, range_ string, values [][]any) (resp *sheets.AppendValuesResponse, err error)
 }
 
 type GSheetService struct {
@@ -23,8 +23,8 @@ type GSheetService struct {
     readRange := "Log1!A2:B"
     *
 */
-func (srv *GSheetService) ReadSheet(spreadsheetId, readRange string) (values [][]string) {
-	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
+func (srv *GSheetService) ReadSheet(spreadsheetID, readRange string) (values [][]string) {
+	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
 	if err != nil {
 		log.Default().Println("Unable to retrieve data from sheet: ", err)
 		return
@@ -50,33 +50,33 @@ API: POST https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{
 DOC: https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
 */
 func (srv *GSheetService) Append(
-	spreadsheetId string, range_ string, values [][]interface{},
+	spreadsheetID string, range_ string, values [][]any,
 ) (resp *sheets.AppendValuesResponse, err error) {
 	valuerange := &sheets.ValueRange{
-		MajorDimension: constant.MajorDimension_ROWS.String(),
+		MajorDimension: constant.MajorDimensionRows.String(),
 		Range:          range_,
 		Values:         values,
 	}
 
-	caller := srv.Spreadsheets.Values.Append(spreadsheetId, range_, valuerange)
-	caller.ValueInputOption(constant.ValueInputOption_RAW.String())
-	caller.InsertDataOption(constant.InsertDataOption_INSERT_ROWS.String())
-	caller.ResponseValueRenderOption(constant.ValueRenderOption_FORMATTED_VALUE.String())
+	caller := srv.Spreadsheets.Values.Append(spreadsheetID, range_, valuerange)
+	caller.ValueInputOption(constant.ValueInputOptionRaw.String())
+	caller.InsertDataOption(constant.InsertDataOptionInsertRows.String())
+	caller.ResponseValueRenderOption(constant.ValueRenderOptionFormattedValue.String())
 
 	resp, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to append data to sheet: ", err)
 	}
 
-	respJson, _ := resp.MarshalJSON()
-	log.Default().Println("Appended: json result:", string(respJson))
+	respJSON, _ := resp.MarshalJSON()
+	log.Default().Println("Appended: json result:", string(respJSON))
 	return
 }
 
 func (srv *GSheetService) Update(
-	spreadsheetId, updateRange string, values *sheets.ValueRange,
+	spreadsheetID, updateRange string, values *sheets.ValueRange,
 ) (result *sheets.UpdateValuesResponse, err error) {
-	caller := srv.Spreadsheets.Values.Update(spreadsheetId, updateRange, values)
+	caller := srv.Spreadsheets.Values.Update(spreadsheetID, updateRange, values)
 	result, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to update data to sheet: ", err)
@@ -86,19 +86,19 @@ func (srv *GSheetService) Update(
 }
 
 func (srv *GSheetService) Search(
-	spreadsheetId string,
+	spreadsheetID string,
 ) (result *sheets.SearchDeveloperMetadataResponse, err error) {
 	searchdevelopermetadatarequest := &sheets.SearchDeveloperMetadataRequest{
 		DataFilters: []*sheets.DataFilter{
 			{
 				DeveloperMetadataLookup: &sheets.DeveloperMetadataLookup{
-					LocationType:     constant.LocationType_ROW.String(),
+					LocationType:     constant.LocationTypeRow.String(),
 					MetadataLocation: &sheets.DeveloperMetadataLocation{},
 				},
 			},
 		},
 	}
-	caller := srv.Spreadsheets.DeveloperMetadata.Search(spreadsheetId, searchdevelopermetadatarequest)
+	caller := srv.Spreadsheets.DeveloperMetadata.Search(spreadsheetID, searchdevelopermetadatarequest)
 	result, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to update data to sheet: ", err)

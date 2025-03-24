@@ -17,7 +17,7 @@ import (
 
 func NewGsheetServiceV2() (gsrv *GSheetService, err error) {
 	ctx := context.Background()
-	b := []byte(os.Getenv(constant.GSHEET_CREDENTIAL))
+	b := []byte(os.Getenv(constant.GsheetCredential))
 	config, err := google.ConfigFromJSON(b, sheets.SpreadsheetsScope)
 	if err != nil {
 		log.Default().Println("Unable to parse client secret file to config: ", err)
@@ -47,7 +47,7 @@ func getClientV2(ctx context.Context, config *oauth2.Config) *http.Client {
 }
 
 func tokenFromEnv() (tok *oauth2.Token, err error) {
-	token := os.Getenv(constant.GSHEET_TOKEN)
+	token := os.Getenv(constant.GsheetToken)
 	tok = &oauth2.Token{}
 	err = json.Unmarshal([]byte(token), tok)
 	return tok, err

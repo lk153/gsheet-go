@@ -15,6 +15,10 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+const (
+	FileMode = os.FileMode(0600)
+)
+
 func NewGsheetService(credentialFilePath string) (gsrv *GSheetService, err error) {
 	ctx := context.Background()
 	b, err := os.ReadFile(filepath.Clean(credentialFilePath))
@@ -70,13 +74,13 @@ func getTokenFromWeb(config *oauth2.Config) (tok *oauth2.Token, err error) {
 
 	var authCode string
 	if _, err = fmt.Scan(&authCode); err != nil {
-		err = fmt.Errorf("unable to read authorization code: %v", err)
+		err = fmt.Errorf("unable to read authorization code: %w", err)
 		return
 	}
 
 	tok, err = config.Exchange(context.TODO(), authCode)
 	if err != nil {
-		err = fmt.Errorf("unable to retrieve token from web: %v", err)
+		err = fmt.Errorf("unable to retrieve token from web: %w", err)
 	}
 
 	return
@@ -96,13 +100,13 @@ func tokenFromFile(file string) (tok *oauth2.Token, err error) {
 
 func saveToken(path string, token *oauth2.Token) {
 	fmt.Printf("Saving credential file to: %s\n", path)
-	f, err := os.OpenFile(filepath.Clean(path), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
+	f, err := os.OpenFile(filepath.Clean(path), os.O_RDWR|os.O_CREATE|os.O_TRUNC, FileMode)
 	if err != nil {
-		log.Fatalf("Unable to cache oauth token: %v", err)
+		log.Panicf("Unable to cache oauth token: %v", err)
 	}
 	defer f.Close()
 	err = json.NewEncoder(f).Encode(token)
 	if err != nil {
-		log.Fatalf("Unable to encode oauth token: %v", err)
+		log.Panicf("Unable to encode oauth token: %v", err)
 	}
 }
