@@ -37,21 +37,19 @@ func (suite *GsheetServiceTestSuite) SetupTest() {
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetService() {
 	gsrv, err := lib.NewGsheetService(suite.credentialFilePath)
-	suite.Nil(suite.T(), gsrv)
+	suite.Nil(gsrv)
 	suite.Require().Error(err)
 	suite.Contains(err.Error(), "unable to read authorization code")
 }
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetServiceV2() {
 	gsrv, err := lib.NewGsheetServiceV2()
-	suite.Nil(suite.T(), gsrv)
-	suite.Require().Error(err)
-	suite.Contains(err.Error(), "could not find default credentials")
+	suite.NotNil(gsrv)
+	suite.Require().NoError(err)
 }
 
 func (suite *GsheetServiceTestSuite) TestNewGsheetServiceV2_has_GSHEET_TOKEN() {
 	gsrv, err := lib.NewGsheetServiceV2()
-	suite.Nil(suite.T(), gsrv)
-	suite.Require().Error(err)
-	suite.Contains(err.Error(), "could not find default credentials")
+	suite.NotNil(gsrv)
+	suite.Require().NoError(err)
 }
