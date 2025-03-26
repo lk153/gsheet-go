@@ -9,7 +9,6 @@ import (
 	"google.golang.org/api/option"
 
 	gsheetgo "github.com/lk153/gsheet-go/v2"
-	"github.com/lk153/gsheet-go/v2/constant"
 )
 
 type GsheetServiceV2TestSuite struct {
@@ -19,12 +18,6 @@ type GsheetServiceV2TestSuite struct {
 
 func TestGsheetServiceV2TestSuite(t *testing.T) {
 	suite.Run(t, new(GsheetServiceV2TestSuite))
-}
-
-func (suite *GsheetServiceV2TestSuite) SetupTest() {
-	suite.credentialFilePath = "client_secret.json"
-	suite.T().Setenv(constant.GsheetCredential, ``)
-	suite.T().Setenv(constant.GsheetToken, ``)
 }
 
 func (suite *GsheetServiceV2TestSuite) TestGetClientV2() {
