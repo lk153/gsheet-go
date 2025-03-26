@@ -33,10 +33,6 @@ Go Packages support for GSheet Integration
 
     https://accounts.google.com/o/oauth2/auth?state-token=offline&redirect_uri=http://localhost&response_type=code&client_id={client_id}&scope=https://www.googleapis.com/auth/spreadsheets
 
-
-	https://accounts.google.com/o/oauth2/auth?state-token=offline&redirect_uri=http://localhost&response_type=code&client_id=600779649356-8uu1iknp22orljn6rgu3oumn34reh8om.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/spreadsheets
-
-
 2. Make API call (POST method) to retrieve **access token**:
 
     `curl --location 'https://oauth2.googleapis.com/token' \\`<br>
