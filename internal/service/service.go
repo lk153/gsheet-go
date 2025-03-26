@@ -1,4 +1,4 @@
-package lib
+package service
 
 import (
 	"log"
@@ -14,7 +14,11 @@ type ISheetService interface {
 }
 
 type GSheetService struct {
-	*sheets.Service
+	srv *sheets.Service
+}
+
+func (s *GSheetService) SetService(srv *sheets.Service) {
+	s.srv = srv
 }
 
 /*
@@ -23,8 +27,8 @@ type GSheetService struct {
     readRange := "Log1!A2:B"
     *
 */
-func (srv *GSheetService) ReadSheet(spreadsheetID, readRange string) (values [][]string) {
-	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
+func (s *GSheetService) ReadSheet(spreadsheetID, readRange string) (values [][]string) {
+	resp, err := s.srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
 	if err != nil {
 		log.Default().Println("Unable to retrieve data from sheet: ", err)
 		return
@@ -49,7 +53,7 @@ func (srv *GSheetService) ReadSheet(spreadsheetID, readRange string) (values [][
 API: POST https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}:append
 DOC: https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
 */
-func (srv *GSheetService) Append(
+func (s *GSheetService) Append(
 	spreadsheetID string, range_ string, values [][]any,
 ) (resp *sheets.AppendValuesResponse, err error) {
 	valuerange := &sheets.ValueRange{
@@ -58,7 +62,7 @@ func (srv *GSheetService) Append(
 		Values:         values,
 	}
 
-	caller := srv.Spreadsheets.Values.Append(spreadsheetID, range_, valuerange)
+	caller := s.srv.Spreadsheets.Values.Append(spreadsheetID, range_, valuerange)
 	caller.ValueInputOption(constant.ValueInputOptionRaw.String())
 	caller.InsertDataOption(constant.InsertDataOptionInsertRows.String())
 	caller.ResponseValueRenderOption(constant.ValueRenderOptionFormattedValue.String())
@@ -73,10 +77,10 @@ func (srv *GSheetService) Append(
 	return
 }
 
-func (srv *GSheetService) Update(
+func (s *GSheetService) Update(
 	spreadsheetID, updateRange string, values *sheets.ValueRange,
 ) (result *sheets.UpdateValuesResponse, err error) {
-	caller := srv.Spreadsheets.Values.Update(spreadsheetID, updateRange, values)
+	caller := s.srv.Spreadsheets.Values.Update(spreadsheetID, updateRange, values)
 	result, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to update data to sheet: ", err)
@@ -85,7 +89,7 @@ func (srv *GSheetService) Update(
 	return
 }
 
-func (srv *GSheetService) Search(
+func (s *GSheetService) Search(
 	spreadsheetID string,
 ) (result *sheets.SearchDeveloperMetadataResponse, err error) {
 	searchdevelopermetadatarequest := &sheets.SearchDeveloperMetadataRequest{
@@ -98,7 +102,7 @@ func (srv *GSheetService) Search(
 			},
 		},
 	}
-	caller := srv.Spreadsheets.DeveloperMetadata.Search(spreadsheetID, searchdevelopermetadatarequest)
+	caller := s.srv.Spreadsheets.DeveloperMetadata.Search(spreadsheetID, searchdevelopermetadatarequest)
 	result, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to update data to sheet: ", err)

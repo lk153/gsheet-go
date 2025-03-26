@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/lk153/gsheet-go/v2/lib"
+	gsheetgo "github.com/lk153/gsheet-go/v2"
 )
 
 func main() {
@@ -11,7 +11,8 @@ func main() {
 }
 
 func runTest() {
-	srv, err := lib.NewGsheetServiceV2()
+	cli := gsheetgo.GetClientV2()
+	srv, err := cli.NewGsheetServiceV2()
 	if err != nil {
 		fmt.Println("Cannot connect Gsheet!")
 		return

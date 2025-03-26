@@ -1,4 +1,4 @@
-package lib
+package gsheetgo
 
 import (
 	"context"
@@ -13,27 +13,43 @@ import (
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
+
+	"github.com/lk153/gsheet-go/v2/internal/service"
 )
 
 const (
 	FileMode = os.FileMode(0600)
 )
 
-func NewGsheetService(credentialFilePath string) (gsrv *GSheetService, err error) {
+type Client struct {
+	ConfigFromJSONFunc  func(jsonKey []byte, scope ...string) (*oauth2.Config, error)
+	ReadFileFunc        func(name string) ([]byte, error)
+	GetOauth2ClientFunc func(ctx context.Context, config *oauth2.Config) (client *http.Client, err error)
+}
+
+func GetClient() *Client {
+	return &Client{
+		ConfigFromJSONFunc:  google.ConfigFromJSON,
+		ReadFileFunc:        os.ReadFile,
+		GetOauth2ClientFunc: getOauth2HttpClient,
+	}
+}
+
+func (cli *Client) NewGsheetService(credentialFilePath string) (gsrv *service.GSheetService, err error) {
 	ctx := context.Background()
-	b, err := os.ReadFile(filepath.Clean(credentialFilePath))
+	b, err := cli.ReadFileFunc(filepath.Clean(credentialFilePath))
 	if err != nil {
 		log.Default().Println("Unable to read client secret file: ", err)
 		return
 	}
 
-	config, err := google.ConfigFromJSON(b, sheets.SpreadsheetsScope)
+	config, err := cli.ConfigFromJSONFunc(b, sheets.SpreadsheetsScope)
 	if err != nil {
 		log.Default().Println("Unable to parse client secret file to config: ", err)
 		return
 	}
 
-	client, err := getClient(ctx, config)
+	client, err := cli.GetOauth2ClientFunc(ctx, config)
 	if err != nil {
 		log.Default().Println("Unable to init client: ", err)
 		return
@@ -48,11 +64,12 @@ func NewGsheetService(credentialFilePath string) (gsrv *GSheetService, err error
 	}
 
 	log.Default().Println("Initialized GSheet client.........")
-	gsrv = &GSheetService{srv}
+	gsrv = &service.GSheetService{}
+	gsrv.SetService(srv)
 	return
 }
 
-func getClient(ctx context.Context, config *oauth2.Config) (client *http.Client, err error) {
+func getOauth2HttpClient(ctx context.Context, config *oauth2.Config) (client *http.Client, err error) {
 	tokenFile := "token.json"
 	tok, err := tokenFromFile(tokenFile)
 	if err != nil {
