@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/lk153/gsheet-go/lib"
+	"github.com/lk153/gsheet-go/v2/lib"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func runTest() {
 	}
 
 	spreadsheetID := "1qqyC8O2ZpDg0BLb2APSc1EWkHo8heiooAaB7uPCzHuc"
-	readRange := "'student'!A:A"
+	readRange := "'student'!A:D"
 	values := srv.ReadSheet(spreadsheetID, readRange)
 	for idx, row := range values {
 		fmt.Println(idx, row)

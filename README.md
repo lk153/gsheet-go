@@ -1,11 +1,11 @@
-[![Go Reference](https://pkg.go.dev/badge/lk153/gsheet-go/markdown.svg)](https://pkg.go.dev/github.com/lk153/gsheet-go)
-[![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml)
-[![reviewdog](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml)
-[![Gosec](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml)
+[![Go Reference](https://pkg.go.dev/badge/lk153/gsheet-go/markdown.svg)](https://pkg.go.dev/github.com/lk153/gsheet-go/v2)
+[![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/v2/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/v2/actions/workflows/unit_test.yml)
+[![reviewdog](https://github.com/lk153/gsheet-go/v2/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/v2/actions/workflows/reviewdog.yml)
+[![Gosec](https://github.com/lk153/gsheet-go/v2/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/v2/actions/workflows/gosec.yml)
 
 [![Coverage](https://raw.githubusercontent.com/lk153/octocovs-central/main/badges/lk153/gsheet-go/coverage.svg)](https://github.com/lk153/octocovs-central)
 [![Coverage Status](https://coveralls.io/repos/github/lk153/gsheet-go/badge.svg?branch=main)](https://coveralls.io/github/lk153/gsheet-go?branch=main)
-[![Go Report Card](https://goreportcard.com/badge/github.com/lk153/gsheet-go)](https://goreportcard.com/report/github.com/lk153/gsheet-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lk153/gsheet-go/v2)](https://goreportcard.com/report/github.com/lk153/gsheet-go/v2)
 
 # Gsheet Utils
 Go Packages support for GSheet Integration
@@ -32,6 +32,9 @@ Go Packages support for GSheet Integration
     https://accounts.google.com/o/oauth2/auth?state-token=offline&redirect_uri=http://localhost&response_type=code&client_id={client_id}&scope=https://www.googleapis.com/auth/spreadsheets
 
 
+	https://accounts.google.com/o/oauth2/auth?state-token=offline&redirect_uri=http://localhost&response_type=code&client_id=600779649356-8uu1iknp22orljn6rgu3oumn34reh8om.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/spreadsheets
+
+
 2. Make API call (POST method) to retrieve **access token**:
 
     `curl --location 'https://oauth2.googleapis.com/token' \\`<br>
@@ -42,7 +45,7 @@ Go Packages support for GSheet Integration
     `--data-urlencode 'client_secret={Client Secret}' \\`<br>
     `--data-urlencode 'redirect_uri=http://localhost'`
 
-### 5. Code Examples:
+### Quickstart:
 
 ```go
 package main
@@ -50,7 +53,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/lk153/gsheet-go/lib"
+	"github.com/lk153/gsheet-go/v2/lib"
 )
 
 func main() {

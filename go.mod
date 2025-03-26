@@ -1,4 +1,4 @@
-module github.com/lk153/gsheet-go
+module github.com/lk153/gsheet-go/v2
 
 go 1.24.0
 

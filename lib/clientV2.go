@@ -12,7 +12,7 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
-	"github.com/lk153/gsheet-go/constant"
+	"github.com/lk153/gsheet-go/v2/constant"
 )
 
 func NewGsheetServiceV2() (gsrv *GSheetService, err error) {
@@ -38,17 +38,17 @@ func NewGsheetServiceV2() (gsrv *GSheetService, err error) {
 }
 
 func getClientV2(ctx context.Context, config *oauth2.Config) *http.Client {
-	tok, err := tokenFromEnv()
+	oauth2Token, err := tokenFromEnv()
 	if err != nil {
 		return nil
 	}
 
-	return config.Client(ctx, tok)
+	return config.Client(ctx, oauth2Token)
 }
 
-func tokenFromEnv() (tok *oauth2.Token, err error) {
+func tokenFromEnv() (oauth2Token *oauth2.Token, err error) {
 	token := os.Getenv(constant.GsheetToken)
-	tok = &oauth2.Token{}
-	err = json.Unmarshal([]byte(token), tok)
-	return tok, err
+	oauth2Token = &oauth2.Token{}
+	err = json.Unmarshal([]byte(token), oauth2Token)
+	return oauth2Token, err
 }

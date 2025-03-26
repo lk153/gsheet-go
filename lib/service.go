@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/api/sheets/v4"
 
-	"github.com/lk153/gsheet-go/constant"
+	"github.com/lk153/gsheet-go/v2/constant"
 )
 
 type ISheetService interface {

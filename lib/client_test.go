@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/lk153/gsheet-go/constant"
-	"github.com/lk153/gsheet-go/lib"
+	"github.com/lk153/gsheet-go/v2/constant"
+	"github.com/lk153/gsheet-go/v2/lib"
 )
 
 type GsheetServiceTestSuite struct {
