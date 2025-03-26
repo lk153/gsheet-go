@@ -10,6 +10,7 @@ import (
 	"golang.org/x/oauth2"
 
 	gsheetgo "github.com/lk153/gsheet-go/v2"
+	"github.com/lk153/gsheet-go/v2/constant"
 )
 
 type GsheetServiceTestSuite struct {
@@ -22,28 +23,9 @@ func TestGsheetServiceTestSuite(t *testing.T) {
 }
 
 func (suite *GsheetServiceTestSuite) SetupTest() {
-	// suite.credentialFilePath = "client_secret.json"
-	// suite.T().Setenv(constant.GsheetCredential, `{
-	// 	"installed": {
-	// 		"client_id": "600779649356-8uu1iknp22orljn6rgu3oumn34reh8om.apps.googleusercontent.com",
-	// 		"project_id": "gsheet-454308",
-	// 		"auth_uri": "https://accounts.google.com/o/oauth2/auth",
-	// 		"token_uri": "https://oauth2.googleapis.com/token",
-	// 		"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-	// 		"client_secret": "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",
-	// 		"redirect_uris": [
-	// 		"http://localhost"
-	// 		]
-	// 	}
-	// }`)
-	// suite.T().Setenv(constant.GsheetToken, `{
-	// 	"access_token": "ya29.a0AeXRPp7QFiElmmsMklWEQx3PPJR8_-Kmp99GtQW_MnZMDBq3d3WlqOz8NKsVlphaVEpq4XumnudlpnH1h-4ygOKDKlz7y8jTtX0WQyYhDf2mwQPQm1MpBBGYPqDGST0Lln4OLmKGieibmMB7vCe6J-PkaH5csyuuAm-QNRWCaCgYKAX0SARISFQHGX2MiDV96ZQjutINICZBfY7vkPg0175",
-	// 	"expires_in": 3599,
-	// 	"refresh_token": "1//0gJ_lmDXanmtCCgYIARAAGBASNwF-L9IrlaP8knUO7mJ5Sp6oreVzUVsNVatsMhR08-detfVOzbXYhw1yA57iH-bCqUcQiHFyZY0",
-	// 	"scope": "https://www.googleapis.com/auth/spreadsheets",
-	// 	"token_type": "Bearer",
-	// 	"refresh_token_expires_in": 604799
-	// }`)
+	suite.credentialFilePath = "client_secret.json"
+	suite.T().Setenv(constant.GsheetCredential, ``)
+	suite.T().Setenv(constant.GsheetToken, ``)
 }
 
 func (suite *GsheetServiceTestSuite) TestGetClient() {
