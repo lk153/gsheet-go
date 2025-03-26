@@ -1,7 +1,7 @@
 [![Go Reference](https://pkg.go.dev/badge/lk153/gsheet-go/markdown.svg)](https://pkg.go.dev/github.com/lk153/gsheet-go/v2)
-[![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/v2/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/v2/actions/workflows/unit_test.yml)
-[![reviewdog](https://github.com/lk153/gsheet-go/v2/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/v2/actions/workflows/reviewdog.yml)
-[![Gosec](https://github.com/lk153/gsheet-go/v2/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/v2/actions/workflows/gosec.yml)
+[![MultiPlatformUnitTest](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/unit_test.yml)
+[![reviewdog](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/reviewdog.yml)
+[![Gosec](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml/badge.svg)](https://github.com/lk153/gsheet-go/actions/workflows/gosec.yml)
 
 [![Coverage](https://raw.githubusercontent.com/lk153/octocovs-central/main/badges/lk153/gsheet-go/coverage.svg)](https://github.com/lk153/octocovs-central)
 [![Coverage Status](https://coveralls.io/repos/github/lk153/gsheet-go/badge.svg?branch=main)](https://coveralls.io/github/lk153/gsheet-go?branch=main)
