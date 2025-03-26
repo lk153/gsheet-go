@@ -10,22 +10,24 @@
 # Gsheet Utils
 Go Packages support for GSheet Integration
 
-### 1. Setup ENV
+## Installation
+
+#### 1. Setup ENV
 
     export GSHEET_CREDENTIAL='...'
     export GSHEET_TOKEN='...'
 
-### 2. Additional Information
+#### 2. Additional Information
 
 * The Spreadsheet ID is the last string of characters in the URL for your spreadsheet. For example, in the URL https://docs.google.com/spreadsheets/d/1qpyC0XzvTcKT6EISywvqESX3A0MwQoFDE8p-Bll4hps/edit#gid=0 , the spreadsheet ID is **``1qpyC0XzvTcKT6EISywvqESX3A0MwQoFDE8p-Bll4hps``** .
 
 
-### 3. Get Gsheet Credential
+#### 3. Get Gsheet Credential
 
 [Reference](https://developers.google.com/sheets/api/quickstart/go#authorize_credentials_for_a_desktop_application)
 
 
-### 4. Get Gsheet Token
+#### 4. Get Gsheet Token
 
 1. Input URL with replacement of param `client_id` on web browser to get **Authorization Code**:
 
@@ -45,7 +47,7 @@ Go Packages support for GSheet Integration
     `--data-urlencode 'client_secret={Client Secret}' \\`<br>
     `--data-urlencode 'redirect_uri=http://localhost'`
 
-### Quickstart:
+## Quickstart:
 
 ```go
 package main
