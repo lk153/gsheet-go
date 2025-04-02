@@ -1,10 +1,13 @@
+.PHONY: data
+
 GOPATH              := $(or $(GOPATH), $(HOME)/go)
 GOLINT              := GO111MODULE=on CGO_ENABLED=1 golangci-lint run
 GOLINTCLEARCACHE	:= GO111MODULE=on CGO_ENABLED=1 golangci-lint cache clean
-GO_TEST_PARALLEL    := go test -parallel 4 -count=1 -timeout 30s
+GO_TEST_PARALLEL    := go test
 GOOGLE_WIRE 		:= $(GOPATH)/bin/wire
 MOCKERY 			:= $(GOPATH)/bin/mockery
 GOBUILDDEBUG        := go build -gcflags=all="-N -l"
+SOURCE=$(shell go list ./... | grep -v /mocks/)
 
 $(MOCKERY):
 	GOPATH=$(GOPATH) go install github.com/vektra/mockery/v2@latest
@@ -20,7 +23,7 @@ build-debug: clean
 lint:
 	$(GOLINTCLEARCACHE) && $(GOLINT) -v ./...
 test:
-	$(GO_TEST_PARALLEL) ./... -v -coverprofile=cover.out && go tool cover -html=cover.out
+	$(GO_TEST_PARALLEL) $(SOURCE) -v -coverprofile=cover.out && go tool cover -html=cover.out
 generate:
 	go generate ./...
 start-debug: build-debug
