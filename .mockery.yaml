@@ -1,0 +1,17 @@
+quiet: False
+disable-version-string: True
+with-expecter: True
+resolve-type-alias: False
+issue-845-fix: True
+inpackage: False
+filename: "{{.InterfaceName}}.go"
+dir: "mocks/{{.PackageName}}"
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "{{.PackageName}}"
+packages:
+  github.com/lk153/gsheet-go/v2/internal/service:
+    interfaces:
+      ISheetService:
+      V4SpreadsheetsValuesService:
+      V4DeveloperMetadata:
+      V4SpreadsheetsValuesGetCall:

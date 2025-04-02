@@ -3,10 +3,11 @@ GOLINT              := GO111MODULE=on CGO_ENABLED=1 golangci-lint run
 GOLINTCLEARCACHE	:= GO111MODULE=on CGO_ENABLED=1 golangci-lint cache clean
 GO_TEST_PARALLEL    := go test -parallel 4 -count=1 -timeout 30s
 GOOGLE_WIRE 		:= $(GOPATH)/bin/wire
+MOCKERY 			:= $(GOPATH)/bin/mockery
 GOBUILDDEBUG        := go build -gcflags=all="-N -l"
 
 $(MOCKERY):
-	GOPATH=$(GOPATH) go install -mod=mod github.com/vektra/mockery/v2@latest
+	GOPATH=$(GOPATH) go install github.com/vektra/mockery/v2@latest
 $(GOOGLE_WIRE):
 	GOPATH=$(GOPATH) go install github.com/google/wire/cmd/wire@latest
 
@@ -24,3 +25,5 @@ generate:
 	go generate ./...
 start-debug: build-debug
 	./gsheet-go
+mock: $(MOCKERY)
+	rm -rf mocks && $(MOCKERY)

@@ -35,7 +35,7 @@ func GetClient() *Client {
 	}
 }
 
-func (cli *Client) NewGsheetService(credentialFilePath string) (gsrv *service.GSheetService, err error) {
+func (cli *Client) NewGsheetService(credentialFilePath string, opts ...option.ClientOption) (gsrv *service.GSheetService, err error) {
 	ctx := context.Background()
 	b, err := cli.ReadFileFunc(filepath.Clean(credentialFilePath))
 	if err != nil {
@@ -55,9 +55,10 @@ func (cli *Client) NewGsheetService(credentialFilePath string) (gsrv *service.GS
 		return
 	}
 
-	srv, err := sheets.NewService(ctx, option.WithHTTPClient(
+	opts = append(opts, option.WithHTTPClient(
 		client,
 	))
+	srv, err := sheets.NewService(ctx, opts...)
 	if err != nil {
 		log.Default().Println("Unable to retrieve Sheets client: ", err)
 		return

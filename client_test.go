@@ -8,6 +8,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 	"golang.org/x/oauth2"
+	"google.golang.org/api/option"
 
 	gsheetgo "github.com/lk153/gsheet-go/v2"
 )
@@ -90,6 +91,23 @@ func (suite *GsheetServiceTestSuite) TestNewGsheetService_GetOauth2ClientFunc_ER
 		},
 	}
 	gsrv, err := cli.NewGsheetService(suite.credentialFilePath)
+	suite.Nil(gsrv)
+	suite.Require().Error(err)
+}
+
+func (suite *GsheetServiceTestSuite) TestNewGsheetService_SheetsNewService_ERR() {
+	cli := &gsheetgo.Client{
+		ConfigFromJSONFunc: func(jsonKey []byte, scope ...string) (*oauth2.Config, error) {
+			return nil, nil
+		},
+		ReadFileFunc: func(name string) ([]byte, error) {
+			return nil, nil
+		},
+		GetOauth2ClientFunc: func(ctx context.Context, config *oauth2.Config) (client *http.Client, err error) {
+			return nil, nil
+		},
+	}
+	gsrv, err := cli.NewGsheetService(suite.credentialFilePath, option.WithAPIKey("apikey"), option.WithoutAuthentication())
 	suite.Nil(gsrv)
 	suite.Require().Error(err)
 }

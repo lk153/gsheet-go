@@ -1,8 +1,11 @@
 package service
 
 import (
+	"context"
 	"log"
+	"net/http"
 
+	"google.golang.org/api/googleapi"
 	"google.golang.org/api/sheets/v4"
 
 	"github.com/lk153/gsheet-go/v2/constant"
@@ -13,12 +16,53 @@ type ISheetService interface {
 	Append(spreadsheetID string, range_ string, values [][]any) (resp *sheets.AppendValuesResponse, err error)
 }
 
+var _ V4SpreadsheetsValuesService = &sheets.SpreadsheetsValuesService{}
+
+type V4SpreadsheetsValuesService interface {
+	Append(spreadsheetId string, range_ string, valuerange *sheets.ValueRange) *sheets.SpreadsheetsValuesAppendCall
+	BatchClear(spreadsheetId string, batchclearvaluesrequest *sheets.BatchClearValuesRequest) *sheets.SpreadsheetsValuesBatchClearCall
+	BatchClearByDataFilter(spreadsheetId string, batchclearvaluesbydatafilterrequest *sheets.BatchClearValuesByDataFilterRequest) *sheets.SpreadsheetsValuesBatchClearByDataFilterCall
+	BatchGet(spreadsheetId string) *sheets.SpreadsheetsValuesBatchGetCall
+	BatchGetByDataFilter(spreadsheetId string, batchgetvaluesbydatafilterrequest *sheets.BatchGetValuesByDataFilterRequest) *sheets.SpreadsheetsValuesBatchGetByDataFilterCall
+	BatchUpdate(spreadsheetId string, batchupdatevaluesrequest *sheets.BatchUpdateValuesRequest) *sheets.SpreadsheetsValuesBatchUpdateCall
+	BatchUpdateByDataFilter(spreadsheetId string, batchupdatevaluesbydatafilterrequest *sheets.BatchUpdateValuesByDataFilterRequest) *sheets.SpreadsheetsValuesBatchUpdateByDataFilterCall
+	Clear(spreadsheetId string, range_ string, clearvaluesrequest *sheets.ClearValuesRequest) *sheets.SpreadsheetsValuesClearCall
+	Get(spreadsheetId string, range_ string) *sheets.SpreadsheetsValuesGetCall
+	Update(spreadsheetId string, range_ string, valuerange *sheets.ValueRange) *sheets.SpreadsheetsValuesUpdateCall
+}
+
+var _ V4DeveloperMetadata = &sheets.SpreadsheetsDeveloperMetadataService{}
+
+type V4DeveloperMetadata interface {
+	Get(spreadsheetId string, metadataId int64) *sheets.SpreadsheetsDeveloperMetadataGetCall
+	Search(spreadsheetId string, searchdevelopermetadatarequest *sheets.SearchDeveloperMetadataRequest) *sheets.SpreadsheetsDeveloperMetadataSearchCall
+}
+
+var _ V4SpreadsheetsValuesGetCall = &sheets.SpreadsheetsValuesGetCall{}
+
+type V4SpreadsheetsValuesGetCall interface {
+	Context(ctx context.Context) *sheets.SpreadsheetsValuesGetCall
+	DateTimeRenderOption(dateTimeRenderOption string) *sheets.SpreadsheetsValuesGetCall
+	Do(opts ...googleapi.CallOption) (*sheets.ValueRange, error)
+	Fields(s ...googleapi.Field) *sheets.SpreadsheetsValuesGetCall
+	Header() http.Header
+	IfNoneMatch(entityTag string) *sheets.SpreadsheetsValuesGetCall
+	MajorDimension(majorDimension string) *sheets.SpreadsheetsValuesGetCall
+	ValueRenderOption(valueRenderOption string) *sheets.SpreadsheetsValuesGetCall
+}
+
 type GSheetService struct {
-	srv *sheets.Service
+	Values            V4SpreadsheetsValuesService
+	DeveloperMetadata V4DeveloperMetadata
 }
 
 func (s *GSheetService) SetService(srv *sheets.Service) {
-	s.srv = srv
+	if srv == nil {
+		srv, _ = sheets.NewService(context.TODO())
+	}
+
+	s.Values = srv.Spreadsheets.Values
+	s.DeveloperMetadata = srv.Spreadsheets.DeveloperMetadata
 }
 
 /*
@@ -28,7 +72,8 @@ func (s *GSheetService) SetService(srv *sheets.Service) {
     *
 */
 func (s *GSheetService) ReadSheet(spreadsheetID, readRange string) (values [][]string) {
-	resp, err := s.srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
+	caller := s.Values.Get(spreadsheetID, readRange)
+	resp, err := caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to retrieve data from sheet: ", err)
 		return
@@ -62,7 +107,7 @@ func (s *GSheetService) Append(
 		Values:         values,
 	}
 
-	caller := s.srv.Spreadsheets.Values.Append(spreadsheetID, range_, valuerange)
+	caller := s.Values.Append(spreadsheetID, range_, valuerange)
 	caller.ValueInputOption(constant.ValueInputOptionRaw.String())
 	caller.InsertDataOption(constant.InsertDataOptionInsertRows.String())
 	caller.ResponseValueRenderOption(constant.ValueRenderOptionFormattedValue.String())
@@ -80,7 +125,7 @@ func (s *GSheetService) Append(
 func (s *GSheetService) Update(
 	spreadsheetID, updateRange string, values *sheets.ValueRange,
 ) (result *sheets.UpdateValuesResponse, err error) {
-	caller := s.srv.Spreadsheets.Values.Update(spreadsheetID, updateRange, values)
+	caller := s.Values.Update(spreadsheetID, updateRange, values)
 	result, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to update data to sheet: ", err)
@@ -102,7 +147,7 @@ func (s *GSheetService) Search(
 			},
 		},
 	}
-	caller := s.srv.Spreadsheets.DeveloperMetadata.Search(spreadsheetID, searchdevelopermetadatarequest)
+	caller := s.DeveloperMetadata.Search(spreadsheetID, searchdevelopermetadatarequest)
 	result, err = caller.Do()
 	if err != nil {
 		log.Default().Println("Unable to update data to sheet: ", err)
